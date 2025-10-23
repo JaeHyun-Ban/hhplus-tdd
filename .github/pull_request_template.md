@@ -1,5 +1,5 @@
 ## :pushpin: PR 제목 규칙
-[STEP01] 반재현
+[STEP02] 반재현
 
 ---
 ### **핵심 체크리스트** :white_check_mark:
