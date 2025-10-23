@@ -198,15 +198,15 @@ class PointControllerTest {
         void chargePointWithNegativeAmount() throws Exception {
             // given
             long negativeAmount = -1000L; // 음수금액 설정
-            //
+            // 마이너스포인트가 충전될 때 예외처리 조건
             given(pointService.chargePoint(TEST_USER_ID, negativeAmount))
                     .willThrow(new IllegalArgumentException("포인트는 0보다 커야 합니다."));
 
             // when & then
-            mockMvc.perform(patch("/point/{id}/charge", TEST_USER_ID)
+            mockMvc.perform(patch("/point/{id}/charge", TEST_USER_ID) // patch로 충전API실행
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(String.valueOf(negativeAmount)))
-                    .andExpect(status().isBadRequest());
+                    .andExpect(status().isBadRequest()); // 컨트롤러 응답의 HTTP 상태코드가 400(Bad Request)인지 검증
         }
 
         @Test
@@ -214,6 +214,7 @@ class PointControllerTest {
         void chargePointWithZeroAmount() throws Exception {
             // given
             long zeroAmount = 0L;
+            // 0원 충전시도 예외처리 조건
             given(pointService.chargePoint(TEST_USER_ID, zeroAmount))
                     .willThrow(new IllegalArgumentException("포인트는 0보다 커야 합니다."));
 
@@ -259,7 +260,7 @@ class PointControllerTest {
                     .willThrow(new IllegalArgumentException("포인트는 0보다 커야 합니다."));
 
             // when & then
-            mockMvc.perform(patch("/point/{id}/use", TEST_USER_ID)
+            mockMvc.perform(patch("/point/{id}/use", TEST_USER_ID) // patch로 API호출
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(String.valueOf(negativeAmount)))
                     .andExpect(status().isBadRequest());
